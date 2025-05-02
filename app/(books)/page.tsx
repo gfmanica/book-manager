@@ -54,7 +54,7 @@ const books = [
 
 export default function Books() {
     return (
-        <div className="grid grid-cols-2 gap-6 p-4 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-6 p-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {books.map((book, index) => (
                 <Card key={index} book={book} />
             ))}

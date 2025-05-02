@@ -9,7 +9,7 @@ import {
 
 export default function CardActions() {
     return (
-        <div className="flex justify-end gap-2 border-t p-2">
+        <div className="flex justify-end gap-1 border-t px-1.5 py-0.5">
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button
