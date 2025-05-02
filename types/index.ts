@@ -13,3 +13,9 @@ export type Author = {
     name: string;
     biography?: string;
 };
+
+export type Category = {
+    id: number;
+    name: string;
+    description?: string;
+};
