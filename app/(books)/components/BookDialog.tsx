@@ -21,6 +21,7 @@ export default function BookDialog({
             <DialogContent className="h-[90%] max-w-[90%] overflow-scroll sm:h-auto sm:max-h-[70%] sm:max-w-[70%]">
                 <DialogHeader>
                     <DialogTitle>{book.title}</DialogTitle>
+
                     <DialogDescription>{book.author}</DialogDescription>
                 </DialogHeader>
 
@@ -32,9 +33,11 @@ export default function BookDialog({
                     />
                     <div className="space-y-2">
                         <p className="text-sm text-gray-600">{book.category}</p>
+
                         <p className="text-sm text-gray-500">
                             {book.publicationYear}
                         </p>
+
                         <p className="text-sm text-gray-700">
                             {book.description}
                         </p>

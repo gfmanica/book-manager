@@ -59,7 +59,7 @@ const books = [
     }
 ];
 
-export default function Books() {
+export default function BooksPage() {
     return (
         <>
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">
@@ -72,7 +72,7 @@ export default function Books() {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 p-4 pt-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-2 gap-4 p-4 pt-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {books.map((book, index) => (
                     <Card key={index} book={book} />
                 ))}
