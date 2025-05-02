@@ -34,7 +34,7 @@ export default function RootLayout({
                 <Providers>
                     <AppSidebar />
 
-                    <main className="flex h-dvh w-full flex-col gap-4 p-4">
+                    <main className="flex h-dvh w-full flex-col">
                         {children}
                     </main>
                 </Providers>

@@ -20,9 +20,7 @@ export default function Card({ book }: { book: Book }) {
                     {book.category}
                 </p>
 
-                <p className="text-sm text-gray-500">
-                    Publicado: {book.publicationYear}
-                </p>
+                <p className="text-sm text-gray-500">{book.publicationYear}</p>
 
                 <p className="mt-2 line-clamp-2 text-sm">{book.description}</p>
             </div>
