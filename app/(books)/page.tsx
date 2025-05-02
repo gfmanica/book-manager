@@ -4,8 +4,7 @@ import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-
-import Card from './components/Card';
+import BookCard from './components/BookCard';
 
 const books = [
     {
@@ -74,7 +73,7 @@ export default function BooksPage() {
 
             <div className="grid grid-cols-2 gap-4 p-4 pt-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {books.map((book, index) => (
-                    <Card key={index} book={book} />
+                    <BookCard key={index} book={book} />
                 ))}
             </div>
         </>

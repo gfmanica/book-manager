@@ -7,7 +7,7 @@ import {
     TooltipTrigger
 } from '@/components/ui/tooltip';
 
-export default function CardActions() {
+export default function BookCardActions() {
     return (
         <div className="flex justify-end gap-1 border-t px-1.5 py-0.5">
             <Tooltip>

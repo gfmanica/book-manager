@@ -33,7 +33,7 @@ const defaultValues: Book = {
     id: 0
 };
 
-export default function BookForm({ id }: { id?: string }) {
+export default function BookForm({id}: {id?: string}) {
     // const {data, isLoading} = useQuery({
     //     queryKey: ['data'],
     //     queryFn: async () => {

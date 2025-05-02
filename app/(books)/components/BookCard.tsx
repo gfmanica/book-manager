@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { Book } from '@/types';
 
 import BookDialog from './BookDialog';
-import CardActions from './CardActions';
+import BookCardActions from './BookCardActions';
 
-export default function Card({ book }: { book: Book }) {
+export default function BookCard({ book }: { book: Book }) {
     const [openBookDialog, setOpenBookDialog] = useState(false);
 
     return (
@@ -50,7 +50,7 @@ export default function Card({ book }: { book: Book }) {
                     </p>
                 </div>
 
-                <CardActions />
+                <BookCardActions />
             </div>
         </>
     );
