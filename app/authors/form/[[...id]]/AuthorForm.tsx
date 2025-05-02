@@ -1,6 +1,9 @@
 'use client';
 
 import { useForm } from '@tanstack/react-form';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { Loader, Save } from 'lucide-react';
 import { z } from 'zod';
 
 import ErrorText from '@/components/error-text';
@@ -8,7 +11,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Author, Book } from '@/types';
+import { Axios } from '@/lib/axios';
+import { Author } from '@/types';
 
 const authorSchema = z.object({
     id: z.number().int().nonnegative(),
@@ -23,21 +27,25 @@ const defaultValues: Author = {
 };
 
 export default function AuthorForm({ id }: { id?: string }) {
-    // const {data, isLoading} = useQuery({
-    //     queryKey: ['data'],
-    //     queryFn: async () => {
-    //       await new Promise((resolve) => setTimeout(resolve, 1000))
-    //       return {firstName: 'FirstName', lastName: "LastName"}
-    //     }
-    //   })
+    const { data, isLoading } = useQuery<Author>({
+        queryKey: ['authors', id],
+        queryFn: () => Axios.get(`/authors/${id}`).then((res) => res.data.data)
+    });
+
+    const { mutate, isPending } = useMutation<
+        AxiosResponse<{ data: Author; message: string }>,
+        AxiosError<{ message: string; status: string }>,
+        Author
+    >({
+        mutationFn: (data) =>
+            id
+                ? Axios.put(`/authors/${data.id}`, data)
+                : Axios.post(`/authors`, data)
+    });
 
     const form = useForm({
-        defaultValues,
-        // defaultValues: data || defaultValues,
-        onSubmit: async ({ value }) => {
-            // Do something with form data
-            console.log(value);
-        },
+        defaultValues: data || defaultValues,
+        onSubmit: ({ value }) => mutate(value),
         validators: {
             onSubmit: authorSchema
         }
@@ -61,6 +69,7 @@ export default function AuthorForm({ id }: { id?: string }) {
                         <div className="flex flex-col gap-2">
                             <Label>Nome</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -78,6 +87,7 @@ export default function AuthorForm({ id }: { id?: string }) {
                         <div className="flex flex-col gap-2">
                             <Label>Biografia</Label>
                             <Textarea
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -91,6 +101,11 @@ export default function AuthorForm({ id }: { id?: string }) {
 
                 <div className="flex w-full justify-end">
                     <Button variant="default" type="submit">
+                        {isPending ? (
+                            <Loader className="animate-spin" />
+                        ) : (
+                            <Save />
+                        )}
                         Salvar
                     </Button>
                 </div>

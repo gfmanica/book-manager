@@ -1,12 +1,16 @@
 'use client';
 
 import { useForm } from '@tanstack/react-form';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { Loader, Save } from 'lucide-react';
 import { z } from 'zod';
 
 import ErrorText from '@/components/error-text';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Axios } from '@/lib/axios';
 import { Book } from '@/types';
 
 const bookSchema = z.object({
@@ -33,22 +37,26 @@ const defaultValues: Book = {
     id: 0
 };
 
-export default function BookForm({id}: {id?: string}) {
-    // const {data, isLoading} = useQuery({
-    //     queryKey: ['data'],
-    //     queryFn: async () => {
-    //       await new Promise((resolve) => setTimeout(resolve, 1000))
-    //       return {firstName: 'FirstName', lastName: "LastName"}
-    //     }
-    //   })
+export default function BookForm({ id }: { id?: string }) {
+    const { data, isLoading } = useQuery<Book>({
+        queryKey: ['books', id],
+        queryFn: () => Axios.get(`/books/${id}`).then((res) => res.data.data)
+    });
+
+    const { mutate, isPending } = useMutation<
+        AxiosResponse<{ data: Book; message: string }>,
+        AxiosError<{ message: string; status: string }>,
+        Book
+    >({
+        mutationFn: (data) =>
+            id
+                ? Axios.put(`/books/${data.id}`, data)
+                : Axios.post(`/books`, data)
+    });
 
     const form = useForm({
-        defaultValues,
-        // defaultValues: data || defaultValues,
-        onSubmit: async ({ value }) => {
-            // Do something with form data
-            console.log(value);
-        },
+        defaultValues: data || defaultValues,
+        onSubmit: ({ value }) => mutate(value),
         validators: {
             onSubmit: bookSchema
         }
@@ -72,6 +80,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Título</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -89,6 +98,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Autor</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -106,6 +116,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Categoria</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -123,6 +134,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Capa (URL)</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -140,6 +152,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Descrição</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
@@ -157,6 +170,7 @@ export default function BookForm({id}: {id?: string}) {
                         <div className="flex flex-col gap-2">
                             <Label>Ano de Publicação</Label>
                             <Input
+                                disabled={isLoading || isPending}
                                 type="number"
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
@@ -171,6 +185,11 @@ export default function BookForm({id}: {id?: string}) {
 
                 <div className="flex w-full justify-end">
                     <Button variant="default" type="submit">
+                        {isPending ? (
+                            <Loader className="animate-spin" />
+                        ) : (
+                            <Save />
+                        )}
                         Salvar
                     </Button>
                 </div>
