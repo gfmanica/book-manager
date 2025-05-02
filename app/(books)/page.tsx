@@ -53,9 +53,9 @@ const books = [
         author: 'J.D. Salinger',
         category: 'Fiction',
         publicationYear: 1951,
-        cover: 'https://m.media-amazon.com/images/I/71X4+1u1xvL._AC_UF1000,1000_QL80_.jpg',
+        cover: 'https://m.media-amazon.com/images/I/81af+MCATTL._AC_UF1000,1000_QL80_.jpg',
         description:
-            'A story of teenage rebellion and alienation in post-war America.'
+            'A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America. A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America. vA story of teenage rebellion and alienation in post-war America.A story of teenage rebellion and alienation in post-war America.'
     }
 ];
 
