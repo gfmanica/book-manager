@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Axios } from '@/lib/axios';
 import { Category } from '@/types';
+import { Loader, Save } from 'lucide-react';
 
 const categorySchema = z.object({
     id: z.number().int().nonnegative(),
