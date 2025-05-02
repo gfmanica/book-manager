@@ -39,6 +39,14 @@ const authors: Author[] = [
 ];
 
 export default function AuthorPage() {
+    // const { data, isLoading } = useQuery<Author[]>({
+    //     queryKey: ['authors'],
+    //     queryFn: () => Axios.get(`/authors`).then((res) => res.data.data),
+    //     initialData: []
+    // });
+
+    // if (isLoading) return <Loading />;
+
     return (
         <>
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">

@@ -1,9 +1,12 @@
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 
+import Loading from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { Axios } from '@/lib/axios';
 import { Category } from '@/types';
 
 import CategoryCard from './components/CategoryCard';
@@ -37,6 +40,14 @@ const categories: Category[] = [
 ];
 
 export default function CategoriesPage() {
+    // const { data, isLoading } = useQuery<Category[]>({
+    //     queryKey: ['categories'],
+    //     queryFn: () => Axios.get(`/categories`).then((res) => res.data.data),
+    //     initialData: []
+    // });
+
+    // if (isLoading) return <Loading />;
+
     return (
         <>
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">

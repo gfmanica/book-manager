@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+
 import BookCard from './components/BookCard';
 
 const books = [
@@ -59,6 +60,14 @@ const books = [
 ];
 
 export default function BooksPage() {
+    // const { data, isLoading } = useQuery<Book[]>({
+    //     queryKey: ['books'],
+    //     queryFn: () => Axios.get(`/books`).then((res) => res.data.data),
+    //     initialData: []
+    // });
+
+    // if (isLoading) return <Loading />;
+
     return (
         <>
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">
