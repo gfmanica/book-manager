@@ -18,7 +18,7 @@ export default function CategoryCard({ category }: { category: Category }) {
 
             <CardActions
                 queryKey="categories"
-                editRoute={`/categories/form${category.id}`}
+                editRoute={`/categories/form/${category.id}`}
                 deleteRoute={`/categories/${category.id}`}
             />
         </div>
