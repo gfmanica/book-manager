@@ -58,7 +58,7 @@ export default function BookCard({ book }: { book: Book }) {
                 <CardActions
                     queryKey="books"
                     editRoute={`/form/${book.id}`}
-                    deleteRoute={`/form/${book.id}`}
+                    deleteRoute={`/books/${book.id}`}
                 />
             </div>
         </>
