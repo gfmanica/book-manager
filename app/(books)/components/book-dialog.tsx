@@ -22,7 +22,7 @@ export default function BookDialog({
                 <DialogHeader>
                     <DialogTitle>{book.title}</DialogTitle>
 
-                    <DialogDescription>{book.author}</DialogDescription>
+                    <DialogDescription>{book.author?.name}</DialogDescription>
                 </DialogHeader>
 
                 <div className="flex flex-col items-start gap-4 self-center sm:flex-row">
@@ -32,7 +32,7 @@ export default function BookDialog({
                         className="h-64 self-center rounded-md object-cover sm:self-auto md:h-128"
                     />
                     <div className="space-y-2">
-                        <p className="text-sm text-gray-600">{book.category}</p>
+                        <p className="text-sm text-gray-600">{book.category?.name}</p>
 
                         <p className="text-sm text-gray-500">
                             {book.publicationYear}
