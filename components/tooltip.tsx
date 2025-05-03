@@ -15,9 +15,7 @@ export default function Tooltip({
         <TooltipUi>
             <TooltipTrigger asChild>{children}</TooltipTrigger>
 
-            <TooltipContent>
-                <p>{text}</p>
-            </TooltipContent>
+            <TooltipContent>{text}</TooltipContent>
         </TooltipUi>
     );
 }
