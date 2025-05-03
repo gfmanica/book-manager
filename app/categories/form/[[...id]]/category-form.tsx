@@ -3,6 +3,7 @@
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
+import { Loader, Save } from 'lucide-react';
 import { z } from 'zod';
 
 import ErrorText from '@/components/error-text';
@@ -12,7 +13,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Axios } from '@/lib/axios';
 import { Category } from '@/types';
-import { Loader, Save } from 'lucide-react';
 
 const categorySchema = z.object({
     id: z.number().int().nonnegative(),

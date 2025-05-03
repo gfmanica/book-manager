@@ -10,13 +10,16 @@ import {
     AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 
+import { Button } from './ui/button';
+
 type ConfirmDialog = {
     title?: string;
     description?: string;
     cancelText?: string;
     confirmText?: string;
-    confirmAction?: () => void;
-    children: React.ReactNode;
+    confirmAction: () => void;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
 };
 
 export function ConfirmDialog({
@@ -25,12 +28,11 @@ export function ConfirmDialog({
     cancelText = 'Cancelar',
     confirmText = 'Confirmar',
     confirmAction,
-    children
+    open,
+    onOpenChange
 }: ConfirmDialog) {
     return (
-        <AlertDialog>
-            <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-
+        <AlertDialog open={open} onOpenChange={onOpenChange}>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -43,7 +45,9 @@ export function ConfirmDialog({
                 <AlertDialogFooter>
                     <AlertDialogCancel>{cancelText}</AlertDialogCancel>
 
-                    <AlertDialogAction>{confirmText}</AlertDialogAction>
+                    <Button onClick={() => confirmAction()}>
+                        {confirmText}
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

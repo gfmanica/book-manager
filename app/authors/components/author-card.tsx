@@ -17,6 +17,7 @@ export default function AuthorCard({ author }: { author: Author }) {
             </div>
 
             <CardActions
+                queryKey="authors"
                 editRoute={`/form/${author.id}`}
                 deleteRoute={`/form/${author.id}`}
             />
