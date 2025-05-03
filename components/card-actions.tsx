@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Pencil, Trash } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ export default function CardActions({
     queryKey
 }: CardActions) {
     const [open, setOpen] = useState(false);
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
         mutationFn: () => Axios.delete(deleteRoute),

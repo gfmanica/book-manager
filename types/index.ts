@@ -1,5 +1,5 @@
 export type Book = {
-    id: number;
+    id?: number;
     title: string;
     author: Author | null;
     category: Category | null;
@@ -9,13 +9,13 @@ export type Book = {
 };
 
 export type Author = {
-    id: number;
+    id?: number;
     name: string;
     biography?: string;
 };
 
 export type Category = {
-    id: number;
+    id?: number;
     name: string;
     description?: string;
 };

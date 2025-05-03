@@ -13,7 +13,7 @@ export default function AuthorPage() {
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">
                 <SidebarTrigger />
 
-                <Link href="/form">
+                <Link href="/authors/form">
                     <Button variant="ghost">
                         <Plus /> Novo autor
                     </Button>

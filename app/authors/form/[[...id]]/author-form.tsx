@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -15,21 +17,23 @@ import { Axios } from '@/lib/axios';
 import { Author } from '@/types';
 
 const authorSchema = z.object({
-    id: z.number().int().nonnegative(),
+    id: z.number().optional(),
     name: z.string().min(1, 'Nome é obrigatório'),
     biography: z.string().optional()
 });
 
 const defaultValues: Author = {
-    id: 0,
     name: '',
     biography: ''
 };
 
 export default function AuthorForm({ id }: { id?: string }) {
+    const router = useRouter();
+
     const { data, isLoading } = useQuery<Author>({
         queryKey: ['authors', id],
-        queryFn: () => Axios.get(`/authors/${id}`).then((res) => res.data.data)
+        queryFn: () => Axios.get(`/authors/${id}`).then((res) => res.data),
+        enabled: Boolean(id)
     });
 
     const { mutate, isPending } = useMutation<
@@ -40,7 +44,10 @@ export default function AuthorForm({ id }: { id?: string }) {
         mutationFn: (data) =>
             id
                 ? Axios.put(`/authors/${data.id}`, data)
-                : Axios.post(`/authors`, data)
+                : Axios.post(`/authors`, data),
+        onSuccess: (res) => {
+            router.push(`/authors/form/${res.data.data.id}`);
+        }
     });
 
     const form = useForm({
