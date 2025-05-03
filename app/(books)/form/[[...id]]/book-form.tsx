@@ -6,18 +6,33 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Loader, Save } from 'lucide-react';
 import { z } from 'zod';
 
+import { Combobox } from '@/components/combobox';
 import ErrorText from '@/components/error-text';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Axios } from '@/lib/axios';
-import { Book } from '@/types';
+import { Author, Book, Category } from '@/types';
+
+const authorSchema = z.object({
+    id: z.number().int().nonnegative(),
+    name: z.string().min(1, 'Nome do autor é obrigatório')
+});
+
+const categorySchema = z.object({
+    id: z.number().int().nonnegative(),
+    name: z.string().min(1, 'Nome do autor é obrigatório')
+});
 
 const bookSchema = z.object({
     id: z.number().int().nonnegative(),
     title: z.string().min(1, 'Título é obrigatório'),
-    author: z.string().min(1, 'Autor é obrigatório'),
-    category: z.string().min(1, 'Categoria é obrigatória'),
+    author: authorSchema
+        .nullable()
+        .refine((value) => value !== null, 'O autor é obrigatório'),
+    category: authorSchema
+        .nullable()
+        .refine((value) => value !== null, 'A categoria é obrigatória'),
     cover: z.string().url('A capa deve ser uma URL válida'),
     description: z.string().min(1, 'Descrição é obrigatória'),
     publicationYear: z
@@ -28,8 +43,8 @@ const bookSchema = z.object({
 });
 
 const defaultValues: Book = {
-    author: '',
-    category: '',
+    author: null,
+    category: null,
     cover: '',
     description: '',
     publicationYear: 2025,
@@ -40,7 +55,8 @@ const defaultValues: Book = {
 export default function BookForm({ id }: { id?: string }) {
     const { data, isLoading } = useQuery<Book>({
         queryKey: ['books', id],
-        queryFn: () => Axios.get(`/books/${id}`).then((res) => res.data.data)
+        queryFn: () => Axios.get(`/books/${id}`).then((res) => res.data.data),
+        enabled: Boolean(id)
     });
 
     const { mutate, isPending } = useMutation<
@@ -96,15 +112,16 @@ export default function BookForm({ id }: { id?: string }) {
                     name="author"
                     children={(field) => (
                         <div className="flex flex-col gap-2">
-                            <Label>Autor</Label>
-                            <Input
+                            <Combobox<Author>
+                                label="Autor"
                                 disabled={isLoading || isPending}
                                 value={field.state.value}
-                                onBlur={field.handleBlur}
-                                onChange={(e) =>
-                                    field.handleChange(e.target.value)
-                                }
+                                url="/authors"
+                                getOptionLabel={(item) => item.name}
+                                getOptionValue={(item) => item.id}
+                                onChange={(item) => field.handleChange(item)}
                             />
+
                             <ErrorText field={field} />
                         </div>
                     )}
@@ -114,15 +131,16 @@ export default function BookForm({ id }: { id?: string }) {
                     name="category"
                     children={(field) => (
                         <div className="flex flex-col gap-2">
-                            <Label>Categoria</Label>
-                            <Input
+                            <Combobox<Category>
+                                label="Categoria"
                                 disabled={isLoading || isPending}
                                 value={field.state.value}
-                                onBlur={field.handleBlur}
-                                onChange={(e) =>
-                                    field.handleChange(e.target.value)
-                                }
+                                url="/categories"
+                                getOptionLabel={(item) => item.name}
+                                getOptionValue={(item) => item.id}
+                                onChange={(item) => field.handleChange(item)}
                             />
+
                             <ErrorText field={field} />
                         </div>
                     )}
