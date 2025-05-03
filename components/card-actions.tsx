@@ -26,10 +26,13 @@ export default function CardActions({
 
     const { mutate } = useMutation({
         mutationFn: () => Axios.delete(deleteRoute),
-        onSuccess: () =>
+        onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [queryKey]
-            })
+            });
+
+            setOpen(false);
+        }
     });
 
     return (

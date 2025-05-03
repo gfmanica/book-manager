@@ -11,6 +11,7 @@ import ErrorText from '@/components/error-text';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Axios } from '@/lib/axios';
 import { Author, Book, Category } from '@/types';
 
@@ -165,16 +166,17 @@ export default function BookForm({ id }: { id?: string }) {
                 />
 
                 <form.Field
-                    name="description"
+                    name="publicationYear"
                     children={(field) => (
                         <div className="flex flex-col gap-2">
-                            <Label>Descrição</Label>
+                            <Label>Ano de publicação</Label>
                             <Input
                                 disabled={isLoading || isPending}
+                                type="number"
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
-                                    field.handleChange(e.target.value)
+                                    field.handleChange(Number(e.target.value))
                                 }
                             />
                             <ErrorText field={field} />
@@ -183,17 +185,16 @@ export default function BookForm({ id }: { id?: string }) {
                 />
 
                 <form.Field
-                    name="publicationYear"
+                    name="description"
                     children={(field) => (
                         <div className="flex flex-col gap-2">
-                            <Label>Ano de Publicação</Label>
-                            <Input
+                            <Label>Descrição</Label>
+                            <Textarea
                                 disabled={isLoading || isPending}
-                                type="number"
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) =>
-                                    field.handleChange(Number(e.target.value))
+                                    field.handleChange(e.target.value)
                                 }
                             />
                             <ErrorText field={field} />
