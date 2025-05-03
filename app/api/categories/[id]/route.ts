@@ -10,7 +10,7 @@ export async function GET(
     const supabase = await createClient();
 
     const { data, error } = await supabase
-        .from('authors')
+        .from('categories')
         .select('*')
         .eq('id', Number(id))
         .single();
@@ -21,7 +21,7 @@ export async function GET(
 
     if (!data) {
         return NextResponse.json(
-            { error: 'Autor não encontrado.' },
+            { error: 'Categoria não encontrada.' },
             { status: 404 }
         );
     }
@@ -35,30 +35,30 @@ export async function PUT(
 ) {
     const supabase = await createClient();
     const { id } = await params;
-    const updatedAuthor = await request.json();
+    const updatedCategory = await request.json();
 
-    // Atualiza o autor no banco de dados
     const { data, error } = await supabase
-        .from('authors')
-        .update(updatedAuthor)
-        .eq('id', Number(id)) // Aplica a atualização ao autor com o id correspondente
-        .select('*') // Retorna os dados atualizados
-        .single(); // Garante que apenas um resultado seja retornado
+        .from('categories')
+        .update(updatedCategory)
+        .eq('id', Number(id))
+        .select('*')
+        .single();
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Se não encontrar o autor, retorna erro 404
     if (!data) {
         return NextResponse.json(
-            { error: 'Autor não encontrado.' },
+            { error: 'Categoria não encontrada.' },
             { status: 404 }
         );
     }
 
-    // Retorna os dados do autor atualizado
-    return NextResponse.json({ data, message: 'Autor atualizado com sucesso.' });
+    return NextResponse.json({
+        data,
+        message: 'Categoria atualizada com sucesso.'
+    });
 }
 
 export async function DELETE(
@@ -68,16 +68,11 @@ export async function DELETE(
     const supabase = await createClient();
     const { id } = await params;
 
-    // Exclui o autor no banco de dados
-    const { data, error } = await supabase
-        .from('authors')
-        .delete()
-        .eq('id', Number(id)); // Aplica a exclusão ao autor com o id correspondente
+    const { error } = await supabase.from('categories').delete().eq('id', Number(id));
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Retorna uma resposta indicando que o autor foi excluído com sucesso
-    return NextResponse.json({ message: 'Autor excluído com sucesso.' });
+    return NextResponse.json({ message: 'Categoria excluída com sucesso.' });
 }

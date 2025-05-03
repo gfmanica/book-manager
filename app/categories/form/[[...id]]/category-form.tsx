@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -15,22 +17,23 @@ import { Axios } from '@/lib/axios';
 import { Category } from '@/types';
 
 const categorySchema = z.object({
-    id: z.number().int().nonnegative(),
+    id: z.number().optional(),
     name: z.string().min(1, 'Nome é obrigatório'),
     biography: z.string().optional()
 });
 
 const defaultValues: Category = {
-    id: 0,
     name: '',
     description: ''
 };
 
 export default function CategoryForm({ id }: { id?: string }) {
+    const router = useRouter();
+
     const { data, isLoading } = useQuery<Category>({
         queryKey: ['categories', id],
-        queryFn: () =>
-            Axios.get(`/categories/${id}`).then((res) => res.data.data)
+        queryFn: () => Axios.get(`/categories/${id}`).then((res) => res.data),
+        enabled: Boolean(id)
     });
 
     const { mutate, isPending } = useMutation<
@@ -41,7 +44,10 @@ export default function CategoryForm({ id }: { id?: string }) {
         mutationFn: (data) =>
             id
                 ? Axios.put(`/categories/${data.id}`, data)
-                : Axios.post(`/categories`, data)
+                : Axios.post(`/categories`, data),
+        onSuccess: (res) => {
+            router.push(`/categories/form/${res.data.data.id}`);
+        }
     });
 
     const form = useForm({

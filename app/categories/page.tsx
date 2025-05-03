@@ -13,7 +13,7 @@ export default function CategoriesPage() {
             <div className="sticky top-0 flex w-full items-center gap-2 bg-white p-4">
                 <SidebarTrigger />
 
-                <Link href="/form">
+                <Link href="/categories/form">
                     <Button variant="ghost">
                         <Plus /> Nova categoria
                     </Button>
