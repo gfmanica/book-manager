@@ -1,8 +1,7 @@
 'use client';
 
-import { Author, Book } from '@/types';
-
-import AuthorCardActions from './author-card-actions';
+import CardActions from '@/components/card-actions';
+import { Author } from '@/types';
 
 export default function AuthorCard({ author }: { author: Author }) {
     return (
@@ -17,7 +16,10 @@ export default function AuthorCard({ author }: { author: Author }) {
                 </p>
             </div>
 
-            <AuthorCardActions />
+            <CardActions
+                editRoute={`/form/${author.id}`}
+                deleteRoute={`/form/${author.id}`}
+            />
         </div>
     );
 }

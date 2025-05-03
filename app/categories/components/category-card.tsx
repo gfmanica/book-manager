@@ -1,8 +1,7 @@
 'use client';
 
+import CardActions from '@/components/card-actions';
 import { Category } from '@/types';
-
-import CategoryCardActions from './category-card-actions';
 
 export default function CategoryCard({ category }: { category: Category }) {
     return (
@@ -17,7 +16,10 @@ export default function CategoryCard({ category }: { category: Category }) {
                 </p>
             </div>
 
-            <CategoryCardActions />
+            <CardActions
+                editRoute={`/form/${category.id}`}
+                deleteRoute={`/form/${category.id}`}
+            />
         </div>
     );
 }

@@ -1,17 +1,22 @@
+import Link from 'next/link';
+
 import { Pencil, Trash } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger
-} from '@/components/ui/tooltip';
 
-export default function BookCardActions() {
+import { ConfirmDialog } from './confirm-dialog';
+import Tooltip from './tooltip';
+
+type CardActions = {
+    editRoute: string;
+    deleteRoute: string;
+};
+
+export default function CardActions({ editRoute, deleteRoute }: CardActions) {
     return (
         <div className="flex justify-end gap-1 border-t px-1.5 py-0.5">
-            <Tooltip>
-                <TooltipTrigger asChild>
+            <Tooltip text="Editar">
+                <Link href={editRoute}>
                     <Button
                         variant="ghost"
                         size="icon"
@@ -19,15 +24,11 @@ export default function BookCardActions() {
                     >
                         <Pencil className="h-4 w-4" />
                     </Button>
-                </TooltipTrigger>
-
-                <TooltipContent>
-                    <p>Editar</p>
-                </TooltipContent>
+                </Link>
             </Tooltip>
 
-            <Tooltip>
-                <TooltipTrigger asChild>
+            <ConfirmDialog>
+                <Tooltip text="Excluir">
                     <Button
                         variant="ghost"
                         size="icon"
@@ -35,12 +36,8 @@ export default function BookCardActions() {
                     >
                         <Trash className="h-4 w-4" />
                     </Button>
-                </TooltipTrigger>
-
-                <TooltipContent>
-                    <p>Excluir</p>
-                </TooltipContent>
-            </Tooltip>
+                </Tooltip>
+            </ConfirmDialog>
         </div>
     );
 }

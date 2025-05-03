@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Book } from '@/types';
 
-import BookCardActions from '../../../components/card-actions';
+import CardActions from '../../../components/card-actions';
 import BookDialog from './book-dialog';
 
 export default function BookCard({ book }: { book: Book }) {
@@ -50,7 +50,10 @@ export default function BookCard({ book }: { book: Book }) {
                     </p>
                 </div>
 
-                <BookCardActions />
+                <CardActions
+                    editRoute={`/form/${book.id}`}
+                    deleteRoute={`/form/${book.id}`}
+                />
             </div>
         </>
     );
