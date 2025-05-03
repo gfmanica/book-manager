@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const Axios = axios.create({
-    baseURL: 'https://arfudy-backend-52nv.onrender.com/api',
+    baseURL: '/api',
     timeout: 60000,
 
     headers: {
