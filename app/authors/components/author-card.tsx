@@ -2,7 +2,7 @@
 
 import { Author, Book } from '@/types';
 
-import AuthorCardActions from './AuthorCardActions';
+import AuthorCardActions from './author-card-actions';
 
 export default function AuthorCard({ author }: { author: Author }) {
     return (

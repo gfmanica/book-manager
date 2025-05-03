@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Author } from '@/types';
 
-import AuthorCard from './components/AuthorCard';
+import AuthorCard from './components/author-card';
 
 const authors: Author[] = [
     {

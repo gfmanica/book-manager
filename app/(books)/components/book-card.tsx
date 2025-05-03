@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import { Book } from '@/types';
 
-import BookDialog from './BookDialog';
-import BookCardActions from './BookCardActions';
+import BookCardActions from '../../../components/card-actions';
+import BookDialog from './book-dialog';
 
 export default function BookCard({ book }: { book: Book }) {
     const [openBookDialog, setOpenBookDialog] = useState(false);

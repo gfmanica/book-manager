@@ -5,7 +5,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
-import BookCard from './components/BookCard';
+import BookCard from './components/book-card';
 
 const books = [
     {

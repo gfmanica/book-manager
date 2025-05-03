@@ -2,7 +2,7 @@
 
 import { Category } from '@/types';
 
-import CategoryCardActions from './CategoryCardActions';
+import CategoryCardActions from './category-card-actions';
 
 export default function CategoryCard({ category }: { category: Category }) {
     return (

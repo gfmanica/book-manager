@@ -9,7 +9,7 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Axios } from '@/lib/axios';
 import { Category } from '@/types';
 
-import CategoryCard from './components/CategoryCard';
+import CategoryCard from './components/category-card';
 
 const categories: Category[] = [
     {
