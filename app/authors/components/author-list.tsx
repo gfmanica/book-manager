@@ -9,13 +9,13 @@ import { Author } from '@/types';
 import AuthorCard from './author-card';
 
 export default function AuthorList() {
-    const { data, isLoading } = useQuery<Author[]>({
+    const { data, isFetching } = useQuery<Author[]>({
         queryKey: ['authors'],
         queryFn: () => Axios.get(`/authors`).then((res) => res.data),
         initialData: []
     });
 
-    if (isLoading) return <Loading />;
+    if (isFetching) return <Loading />;
 
     return (
         <div className="grid grid-cols-2 gap-4 p-4 pt-0 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
