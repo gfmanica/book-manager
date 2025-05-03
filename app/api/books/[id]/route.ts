@@ -31,7 +31,8 @@ export async function GET(
         author: data.authors,
         category: data.categories,
         authors: undefined,
-        categories: undefined
+        categories: undefined,
+        publicationYear: data.publication_year
     };
 
     return NextResponse.json(transformed);
