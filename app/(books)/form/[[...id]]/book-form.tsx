@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -26,7 +28,7 @@ const categorySchema = z.object({
 });
 
 const bookSchema = z.object({
-    id: z.number().int().nonnegative(),
+    id: z.number().optional(),
     title: z.string().min(1, 'Título é obrigatório'),
     author: authorSchema
         .nullable()
@@ -49,14 +51,15 @@ const defaultValues: Book = {
     cover: '',
     description: '',
     publicationYear: 2025,
-    title: '',
-    id: 0
+    title: ''
 };
 
 export default function BookForm({ id }: { id?: string }) {
+    const router = useRouter();
+
     const { data, isLoading } = useQuery<Book>({
         queryKey: ['books', id],
-        queryFn: () => Axios.get(`/books/${id}`).then((res) => res.data.data),
+        queryFn: () => Axios.get(`/books/${id}`).then((res) => res.data),
         enabled: Boolean(id)
     });
 
@@ -68,7 +71,10 @@ export default function BookForm({ id }: { id?: string }) {
         mutationFn: (data) =>
             id
                 ? Axios.put(`/books/${data.id}`, data)
-                : Axios.post(`/books`, data)
+                : Axios.post(`/books`, data),
+        onSuccess: (res) => {
+            router.push(`/form/${res.data.data.id}`);
+        }
     });
 
     const form = useForm({
@@ -119,7 +125,7 @@ export default function BookForm({ id }: { id?: string }) {
                                 value={field.state.value}
                                 url="/authors"
                                 getOptionLabel={(item) => item.name}
-                                getOptionValue={(item) => item.id}
+                                getOptionValue={(item) => item.id as number}
                                 onChange={(item) => field.handleChange(item)}
                             />
 
@@ -138,7 +144,7 @@ export default function BookForm({ id }: { id?: string }) {
                                 value={field.state.value}
                                 url="/categories"
                                 getOptionLabel={(item) => item.name}
-                                getOptionValue={(item) => item.id}
+                                getOptionValue={(item) => item.id as number}
                                 onChange={(item) => field.handleChange(item)}
                             />
 

@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import { createClient } from '@/lib/supabase';
 
@@ -22,4 +22,30 @@ export async function GET() {
     }));
 
     return NextResponse.json(transformed);
+}
+
+export async function POST(request: NextRequest) {
+    const supabase = await createClient();
+    const body = await request.json();
+
+    const newBook = {
+        author_id: body.author.id,
+        category_id: body.category.id,
+        cover: body.cover,
+        description: body.description,
+        publication_year: body.publicationYear,
+        title: body.title
+    };
+
+    const { data, error } = await supabase
+        .from('books')
+        .insert([newBook])
+        .select('*')
+        .single();
+
+    if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ data, message: 'Livro criado com sucesso.' });
 }

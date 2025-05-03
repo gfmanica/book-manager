@@ -37,11 +37,11 @@ export default function BookCard({ book }: { book: Book }) {
                             </h2>
 
                             <p className="truncate text-sm text-gray-600">
-                                {book.author}
+                                {book.author?.name}
                             </p>
 
                             <p className="truncate text-sm text-gray-500">
-                                {book.category}
+                                {book.category?.name}
                             </p>
 
                             <p className="text-sm text-gray-500">

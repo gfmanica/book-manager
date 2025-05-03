@@ -17,7 +17,6 @@ import {
     PopoverTrigger
 } from '@/components/ui/popover';
 import { Axios } from '@/lib/axios';
-import { Author } from '@/types';
 
 import { Label } from './ui/label';
 
@@ -31,36 +30,6 @@ type Combobox<T> = {
     onChange: (item: T | null) => void;
     disabled?: boolean;
 };
-
-const authors: Author[] = [
-    {
-        id: 1,
-        name: 'Gabriel García Márquez',
-        biography:
-            'Colombian novelist, short-story writer, screenwriter, and journalist.'
-    },
-    {
-        id: 2,
-        name: 'Jane Austen',
-        biography: 'English novelist known for her six major novels.'
-    },
-    {
-        id: 3,
-        name: 'George Orwell',
-        biography: 'English novelist, essayist, journalist, and critic.'
-    },
-    {
-        id: 4,
-        name: 'Toni Morrison',
-        biography: 'American novelist, essayist, editor, and professor.'
-    },
-    {
-        id: 5,
-        name: 'Haruki Murakami',
-        biography:
-            'Japanese writer known for his surreal and melancholic works.'
-    }
-];
 
 export function Combobox<T>({
     url,
@@ -77,8 +46,7 @@ export function Combobox<T>({
     const { data, isLoading, error } = useQuery<T[]>({
         queryKey: [url],
         queryFn: () => Axios.get(url).then((res) => res.data),
-        initialData: authors as any,
-        enabled: false
+        initialData: []
     });
 
     const selectedItem = value
@@ -112,7 +80,9 @@ export function Combobox<T>({
                         {selectedItem ? (
                             getOptionLabel(selectedItem)
                         ) : (
-                            <p className="text-muted-foreground">{placeholder}</p>
+                            <p className="text-muted-foreground">
+                                {placeholder}
+                            </p>
                         )}
 
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

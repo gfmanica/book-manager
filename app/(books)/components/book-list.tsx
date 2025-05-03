@@ -15,6 +15,7 @@ export default function BookList() {
         initialData: []
     });
 
+    console.log(data);
     if (isLoading) return <Loading />;
 
     return (
