@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { createClient } from '@/lib/supabase';
+import { deleteBook, findOneBook, updateBook } from '@/models/books';
 
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
     const { id } = await params;
-    const supabase = await createClient();
-
-    const { data, error } = await supabase
-        .from('books')
-        .select('*, authors(*), categories(*)')
-        .eq('id', Number(id))
-        .single();
+    const { data, error } = await findOneBook(id);
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -26,42 +20,16 @@ export async function GET(
         );
     }
 
-    const transformed = {
-        ...data,
-        author: data.authors,
-        category: data.categories,
-        authors: undefined,
-        categories: undefined,
-        publicationYear: data.publication_year
-    };
-
-    return NextResponse.json(transformed);
+    return NextResponse.json(data);
 }
 
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = await createClient();
     const { id } = await params;
     const body = await request.json();
-
-    const updatedBook = {
-        id: body.id,
-        author_id: body.author.id,
-        category_id: body.category.id,
-        cover: body.cover,
-        description: body.description,
-        publication_year: body.publicationYear,
-        title: body.title
-    };
-
-    const { data, error } = await supabase
-        .from('books')
-        .update(updatedBook)
-        .eq('id', Number(id))
-        .select('*')
-        .single();
+    const { data, error } = await updateBook(id, body);
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -84,13 +52,8 @@ export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const supabase = await createClient();
     const { id } = await params;
-
-    const { error } = await supabase
-        .from('books')
-        .delete()
-        .eq('id', Number(id));
+    const { error } = await deleteBook(id);
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
