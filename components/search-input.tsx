@@ -7,7 +7,7 @@ import useDebounce from '@/hooks/use-debounce';
 
 import { Input } from './ui/input';
 
-export default function SearchInput() {
+export default function SearchInput({placeholder}: { placeholder?: string }) {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function SearchInput() {
 
     return (
         <Input
-            placeholder="Buscar por livro..."
+            placeholder={placeholder || 'Pesquisar...'}
             value={value}
             onChange={(e) => setValue(e.target.value)}
         />

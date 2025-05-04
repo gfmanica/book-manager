@@ -20,7 +20,7 @@ export default function BooksPage() {
                     </Button>
                 </Link>
 
-                <SearchInput />
+                <SearchInput placeholder='Pesquisar título...' />
             </div>
 
             <BookList />

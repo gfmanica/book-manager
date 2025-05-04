@@ -30,6 +30,7 @@ export default function BookList() {
             {data.map((book, index) => (
                 <BookCard key={index} book={book} />
             ))}
+
             {data.length === 0 && (
                 <div className="col-span-full text-center">
                     Nenhum livro encontrado.

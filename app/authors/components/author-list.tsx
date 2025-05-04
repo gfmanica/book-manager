@@ -1,5 +1,7 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+
 import { useQuery } from '@tanstack/react-query';
 
 import Loading from '@/components/loader';
@@ -9,9 +11,15 @@ import { Author } from '@/types';
 import AuthorCard from './author-card';
 
 export default function AuthorList() {
+    const searchParams = useSearchParams();
+    const query = searchParams.get('query') || '';
+
     const { data, isFetching } = useQuery<Author[]>({
-        queryKey: ['authors'],
-        queryFn: () => Axios.get(`/authors`).then((res) => res.data),
+        queryKey: ['authors', query],
+        queryFn: () =>
+            Axios.get(`/authors${query ? `?query=${query}` : ''}`).then(
+                (res) => res.data
+            ),
         initialData: []
     });
 
@@ -22,6 +30,12 @@ export default function AuthorList() {
             {data.map((author, index) => (
                 <AuthorCard key={index} author={author} />
             ))}
+
+            {data.length === 0 && (
+                <div className="col-span-full text-center">
+                    Nenhum autor encontrado.
+                </div>
+            )}
         </div>
     );
 }

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
-import { Plus } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
 import AuthorList from './components/author-list';
+import SearchInput from '@/components/search-input';
 
 export default function AuthorPage() {
     return (
@@ -18,6 +19,8 @@ export default function AuthorPage() {
                         <Plus /> Novo autor
                     </Button>
                 </Link>
+
+                <SearchInput placeholder='Pesquisar autor...' />
             </div>
 
             <AuthorList />

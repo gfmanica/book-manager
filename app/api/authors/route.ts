@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { createClient } from '@/lib/supabase';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     const supabase = await createClient();
+    const searchParams = request.nextUrl.searchParams;
+    const query = searchParams.get('query')?.toLowerCase();
 
-    const { data, error } = await supabase.from('authors').select('*');
+    let supabaseQuery = supabase.from('authors').select();
+
+    if (query) {
+        supabaseQuery = supabaseQuery.ilike('name', `%${query}%`);
+    }
+
+    const { data, error } = await supabaseQuery;
 
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
