@@ -1,5 +1,7 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
+
 import { useQuery } from '@tanstack/react-query';
 
 import Loading from '@/components/loader';
@@ -9,9 +11,15 @@ import { Book } from '@/types';
 import BookCard from './book-card';
 
 export default function BookList() {
+    const searchParams = useSearchParams();
+    const query = searchParams.get('query') || '';
+
     const { data, isFetching } = useQuery<Book[]>({
-        queryKey: ['books'],
-        queryFn: () => Axios.get(`/books`).then((res) => res.data),
+        queryKey: ['books', query],
+        queryFn: () =>
+            Axios.get(`/books${query ? `?query=${query}` : ''}`).then(
+                (res) => res.data
+            ),
         initialData: []
     });
 
@@ -22,6 +30,11 @@ export default function BookList() {
             {data.map((book, index) => (
                 <BookCard key={index} book={book} />
             ))}
+            {data.length === 0 && (
+                <div className="col-span-full text-center">
+                    Nenhum livro encontrado.
+                </div>
+            )}
         </div>
     );
 }

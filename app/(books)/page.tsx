@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { Plus } from 'lucide-react';
 
+import SearchInput from '@/components/search-input';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
@@ -18,6 +19,8 @@ export default function BooksPage() {
                         <Plus /> Novo livro
                     </Button>
                 </Link>
+
+                <SearchInput />
             </div>
 
             <BookList />
