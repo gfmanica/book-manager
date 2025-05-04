@@ -2,7 +2,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
 import { Pencil, Trash } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Axios } from '@/lib/axios';
@@ -24,15 +26,17 @@ export default function CardActions({
     const [open, setOpen] = useState(false);
     const queryClient = useQueryClient();
 
-    const { mutate } = useMutation({
+    const { mutate } = useMutation<
+        AxiosResponse<{ message: string }>,
+        AxiosError<{ error: string }>
+    >({
         mutationFn: () => Axios.delete(deleteRoute),
-        onSuccess: () => {
+        onSuccess: () =>
             queryClient.invalidateQueries({
                 queryKey: [queryKey]
-            });
-
-            setOpen(false);
-        }
+            }),
+        onError: (error) => toast.error(error.response?.data.error),
+        onSettled: () => setOpen(false)
     });
 
     return (

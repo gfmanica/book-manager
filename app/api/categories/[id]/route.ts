@@ -68,9 +68,21 @@ export async function DELETE(
     const supabase = await createClient();
     const { id } = await params;
 
-    const { error } = await supabase.from('categories').delete().eq('id', Number(id));
+    const { error } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', Number(id));
 
     if (error) {
+        if (error.code === '23503') {
+            return NextResponse.json(
+                {
+                    error: 'Não é possível excluir a categoria, pois ela está associado a um livro.'
+                },
+                { status: 400 }
+            );
+        }
+
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

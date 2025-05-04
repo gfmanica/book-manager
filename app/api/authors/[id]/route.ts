@@ -58,7 +58,10 @@ export async function PUT(
     }
 
     // Retorna os dados do autor atualizado
-    return NextResponse.json({ data, message: 'Autor atualizado com sucesso.' });
+    return NextResponse.json({
+        data,
+        message: 'Autor atualizado com sucesso.'
+    });
 }
 
 export async function DELETE(
@@ -75,6 +78,15 @@ export async function DELETE(
         .eq('id', Number(id)); // Aplica a exclusão ao autor com o id correspondente
 
     if (error) {
+        if (error.code === '23503') {
+            return NextResponse.json(
+                {
+                    error: 'Não é possível excluir o autor, pois ele está associado a um livro.'
+                },
+                { status: 400 }
+            );
+        }
+
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

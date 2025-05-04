@@ -6,6 +6,7 @@ import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Loader, Save } from 'lucide-react';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { Combobox } from '@/components/combobox';
@@ -74,6 +75,12 @@ export default function BookForm({ id }: { id?: string }) {
                 : Axios.post(`/books`, data),
         onSuccess: (res) => {
             router.push(`/form/${res.data.data.id}`);
+
+            toast.success(res.data.message);
+        },
+        onError: (error) => {
+            debugger;
+            toast.error(error.response?.data.message);
         }
     });
 

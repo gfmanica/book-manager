@@ -6,6 +6,7 @@ import { useForm } from '@tanstack/react-form';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Loader, Save } from 'lucide-react';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 import ErrorText from '@/components/error-text';
@@ -47,7 +48,10 @@ export default function AuthorForm({ id }: { id?: string }) {
                 : Axios.post(`/authors`, data),
         onSuccess: (res) => {
             router.push(`/authors/form/${res.data.data.id}`);
-        }
+
+            toast.success(res.data.message);
+        },
+        onError: (error) => toast.error(error.response?.data.message)
     });
 
     const form = useForm({
