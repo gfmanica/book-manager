@@ -5,8 +5,8 @@ import { useState } from 'react';
 import Tooltip from '@/components/tooltip';
 import { Book } from '@/types';
 
-import CardActions from '../../../components/card-actions';
 import BookDialog from './book-dialog';
+import CardActions from '@/components/card-actions';
 
 export default function BookCard({ book }: { book: Book }) {
     const [openBookDialog, setOpenBookDialog] = useState(false);
