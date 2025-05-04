@@ -56,7 +56,7 @@ export default function BookCard({ book }: { book: Book }) {
                 </Tooltip>
 
                 <CardActions
-                    queryKey="books"
+                    queryKey="/books"
                     editRoute={`/form/${book.id}`}
                     deleteRoute={`/books/${book.id}`}
                 />
