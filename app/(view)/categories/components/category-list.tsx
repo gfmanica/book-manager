@@ -1,26 +1,14 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-
-import { useQuery } from '@tanstack/react-query';
-
 import Loading from '@/components/loader';
-import { Axios } from '@/lib/axios';
+import useListController from '@/hooks/use-list-controller';
 import { Category } from '@/types';
 
 import CategoryCard from './category-card';
 
 export default function CategoryList() {
-    const searchParams = useSearchParams();
-    const query = searchParams.get('query') || '';
-
-    const { data, isFetching } = useQuery<Category[]>({
-        queryKey: ['categories', query],
-        queryFn: () =>
-            Axios.get(`/categories${query ? `?query=${query}` : ''}`).then(
-                (res) => res.data
-            ),
-        initialData: []
+    const { data, isFetching } = useListController<Category>({
+        endpoint: '/categories'
     });
 
     if (isFetching) return <Loading />;

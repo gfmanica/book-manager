@@ -1,26 +1,14 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-
-import { useQuery } from '@tanstack/react-query';
-
 import Loading from '@/components/loader';
-import { Axios } from '@/lib/axios';
+import useListController from '@/hooks/use-list-controller';
 import { Book } from '@/types';
 
 import BookCard from './book-card';
 
 export default function BookList() {
-    const searchParams = useSearchParams();
-    const query = searchParams.get('query') || '';
-
-    const { data, isFetching } = useQuery<Book[]>({
-        queryKey: ['books', query],
-        queryFn: () =>
-            Axios.get(`/books${query ? `?query=${query}` : ''}`).then(
-                (res) => res.data
-            ),
-        initialData: []
+    const { data, isFetching } = useListController<Book>({
+        endpoint: '/books'
     });
 
     if (isFetching) return <Loading />;

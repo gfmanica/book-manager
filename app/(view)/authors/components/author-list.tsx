@@ -1,26 +1,14 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-
-import { useQuery } from '@tanstack/react-query';
-
 import Loading from '@/components/loader';
-import { Axios } from '@/lib/axios';
+import useListController from '@/hooks/use-list-controller';
 import { Author } from '@/types';
 
 import AuthorCard from './author-card';
 
 export default function AuthorList() {
-    const searchParams = useSearchParams();
-    const query = searchParams.get('query') || '';
-
-    const { data, isFetching } = useQuery<Author[]>({
-        queryKey: ['authors', query],
-        queryFn: () =>
-            Axios.get(`/authors${query ? `?query=${query}` : ''}`).then(
-                (res) => res.data
-            ),
-        initialData: []
+    const { data, isFetching } = useListController<Author>({
+        endpoint: '/authors'
     });
 
     if (isFetching) return <Loading />;
