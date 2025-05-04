@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
 import { Pencil, Trash } from 'lucide-react';
-import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import { Axios } from '@/lib/axios';
+import useDeleteController from '@/hooks/use-delete-controller';
 
 import { ConfirmDialog } from './confirm-dialog';
 import Tooltip from './tooltip';
@@ -24,18 +21,9 @@ export default function CardActions({
     queryKey
 }: CardActions) {
     const [open, setOpen] = useState(false);
-    const queryClient = useQueryClient();
-
-    const { mutate } = useMutation<
-        AxiosResponse<{ message: string }>,
-        AxiosError<{ error: string }>
-    >({
-        mutationFn: () => Axios.delete(deleteRoute),
-        onSuccess: () =>
-            queryClient.invalidateQueries({
-                queryKey: [queryKey]
-            }),
-        onError: (error) => toast.error(error.response?.data.error),
+    const { mutate } = useDeleteController({
+        endpoint: deleteRoute,
+        invalidateQueryKey: queryKey,
         onSettled: () => setOpen(false)
     });
 
