@@ -1,5 +1,12 @@
 import { createClient } from '@/lib/supabase';
 
+/**
+ * Recupera todos os livros da tabela 'books'.
+ * Inclui informações relacionadas de autores e categorias.
+ * Pode filtrar os resultados com base em uma consulta opcional.
+ * @param query - Uma string para filtrar livros pelo título.
+ * @returns Uma lista de livros que correspondem à consulta.
+ */
 export async function findAllBooks(query?: string) {
     const supabase = await createClient();
     let supabaseQuery = supabase
@@ -25,6 +32,12 @@ export async function findAllBooks(query?: string) {
     });
 }
 
+/**
+ * Recupera um único livro com base no ID fornecido.
+ * Inclui informações relacionadas de autores e categorias.
+ * @param id - O ID do livro a ser recuperado.
+ * @returns O livro correspondente ao ID ou um erro se não encontrado.
+ */
 export async function findOneBook(id: string) {
     const supabase = await createClient();
 
@@ -55,6 +68,11 @@ export async function findOneBook(id: string) {
         });
 }
 
+/**
+ * Cria um novo livro na tabela 'books'.
+ * @param body - Um objeto contendo os dados do livro a ser criado.
+ * @returns O livro recém-criado.
+ */
 export async function createBook(body: any) {
     const supabase = await createClient();
 
@@ -70,6 +88,12 @@ export async function createBook(body: any) {
     return await supabase.from('books').insert([newBook]).select().single();
 }
 
+/**
+ * Atualiza os dados de um livro existente com base no ID fornecido.
+ * @param id - O ID do livro a ser atualizado.
+ * @param body - Um objeto contendo os novos dados do livro.
+ * @returns O livro atualizado.
+ */
 export async function updateBook(id: string, body: any) {
     const supabase = await createClient();
 
@@ -91,6 +115,11 @@ export async function updateBook(id: string, body: any) {
         .single();
 }
 
+/**
+ * Exclui um livro da tabela 'books' com base no ID fornecido.
+ * @param id - O ID do livro a ser excluído.
+ * @returns O resultado da operação de exclusão.
+ */
 export async function deleteBook(id: string) {
     const supabase = await createClient();
 

@@ -32,7 +32,9 @@ export default function BookDialog({
                         className="h-64 self-center rounded-md object-cover sm:self-auto md:h-128"
                     />
                     <div className="space-y-2">
-                        <p className="text-sm text-gray-600">{book.category?.name}</p>
+                        <p className="text-sm text-gray-600">
+                            {book.category?.name}
+                        </p>
 
                         <p className="text-sm text-gray-500">
                             {book.publicationYear}

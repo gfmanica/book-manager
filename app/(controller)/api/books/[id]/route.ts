@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { deleteBook, findOneBook, updateBook } from '@/models/books';
 
+/**
+ * Recupera um livro específico pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID do livro a ser recuperado.
+ *
+ * Respostas:
+ * - 200: Retorna os dados do livro.
+ * - 404: Retorna uma mensagem de erro se o livro não for encontrado.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -23,6 +34,20 @@ export async function GET(
     return NextResponse.json(data);
 }
 
+/**
+ * Atualiza os dados de um livro existente pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID do livro a ser atualizado.
+ *
+ * Corpo da Requisição:
+ * - Um objeto JSON contendo os novos dados do livro.
+ *
+ * Respostas:
+ * - 200: Retorna os dados do livro atualizado.
+ * - 404: Retorna uma mensagem de erro se o livro não for encontrado.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -48,6 +73,16 @@ export async function PUT(
     });
 }
 
+/**
+ * Exclui um livro pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID do livro a ser excluído.
+ *
+ * Respostas:
+ * - 200: Retorna uma mensagem de sucesso ao excluir o livro.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }

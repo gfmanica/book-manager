@@ -2,11 +2,11 @@ import Link from 'next/link';
 
 import { Plus, Search } from 'lucide-react';
 
+import SearchInput from '@/components/search-input';
 import { Button } from '@/components/ui/button';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 
 import AuthorList from './components/author-list';
-import SearchInput from '@/components/search-input';
 
 export default function AuthorPage() {
     return (
@@ -20,7 +20,7 @@ export default function AuthorPage() {
                     </Button>
                 </Link>
 
-                <SearchInput placeholder='Pesquisar autor...' />
+                <SearchInput placeholder="Pesquisar autor..." />
             </div>
 
             <AuthorList />

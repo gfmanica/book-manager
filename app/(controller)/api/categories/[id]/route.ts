@@ -1,3 +1,12 @@
+/**
+ * Rota para gerenciar categorias com base no ID.
+ *
+ * Métodos:
+ * - GET: Recupera uma categoria específica pelo ID.
+ * - PUT: Atualiza os dados de uma categoria existente pelo ID.
+ * - DELETE: Exclui uma categoria pelo ID.
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
 
 import {
@@ -6,6 +15,17 @@ import {
     updateCategory
 } from '@/models/categories';
 
+/**
+ * Recupera uma categoria específica pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID da categoria a ser recuperada.
+ *
+ * Respostas:
+ * - 200: Retorna os dados da categoria.
+ * - 404: Retorna uma mensagem de erro se a categoria não for encontrada.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -27,6 +47,20 @@ export async function GET(
     return NextResponse.json(data);
 }
 
+/**
+ * Atualiza os dados de uma categoria existente pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID da categoria a ser atualizada.
+ *
+ * Corpo da Requisição:
+ * - Um objeto JSON contendo os novos dados da categoria.
+ *
+ * Respostas:
+ * - 200: Retorna os dados da categoria atualizada.
+ * - 404: Retorna uma mensagem de erro se a categoria não for encontrada.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -52,6 +86,17 @@ export async function PUT(
     });
 }
 
+/**
+ * Exclui uma categoria pelo ID.
+ *
+ * Parâmetros da URL:
+ * - id: O ID da categoria a ser excluída.
+ *
+ * Respostas:
+ * - 200: Retorna uma mensagem de sucesso ao excluir a categoria.
+ * - 400: Retorna uma mensagem de erro se a categoria estiver associada a um livro.
+ * - 500: Retorna uma mensagem de erro em caso de falha.
+ */
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }

@@ -1,4 +1,5 @@
 ## Iniciando
+
 Antes de rodar o projeto, é necessário inserir as variáveis de desenvolvimento para conectar com o banco de dados.
 Elas estão disponíveis dentro do tópico `Variáveis de ambiente`, dentro do documento de entrega do trabalho. Após acessá-las, copie-as e cole no arquivo `.env`.
 

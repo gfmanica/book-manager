@@ -6,7 +6,7 @@ import { Author } from '@/types';
 export default function AuthorCard({ author }: { author: Author }) {
     return (
         <div className="overflow-hidden rounded-lg border bg-white shadow-md">
-            <div className="p-4 h-20">
+            <div className="h-20 p-4">
                 <h2 className="truncate text-lg font-semibold">
                     {author.name}
                 </h2>
